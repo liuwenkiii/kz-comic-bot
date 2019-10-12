@@ -19,13 +19,14 @@ def _handle(job):
     cache = _get_cache(job)
     response = requests.get(link)
     parse_result = _parse(response)
-    if (len(cache) == 0) or (cache['latest_comic'] is not parse_result['latest_comic']):
+    if (len(cache) == 0) or (cache['latest_comic'] != parse_result['latest_comic']):
         title = parse_result['latest_comic']
         cache_ = {
            'latest_comic': parse_result['latest_comic']
         }
         url = "http://m.acg456.com" + parse_result['latest_comic_url']
         push.msg(job_id, title, url, cache_)
+        print("push msg start.\n")
     else:
         print("already push.\n")
 
